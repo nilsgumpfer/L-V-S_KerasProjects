@@ -84,12 +84,3 @@ P = imagenet_utils.decode_predictions(preds)
 # probabilities to our terminal
 for (i, (imagenetID, label, prob)) in enumerate(P[0]):
     print("{}. {}: {:.2f}%".format(i + 1, label, prob * 100))
-
-# load the image via OpenCV, draw the top prediction on the image,
-# and display the image to our screen
-orig = cv2.imread(args["image"])
-(imagenetID, label, prob) = P[0][0]
-cv2.putText(orig, "Label: {}, {:.2f}%".format(label, prob * 100),
-            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
-cv2.imshow("Classification", orig)
-cv2.waitKey(0)

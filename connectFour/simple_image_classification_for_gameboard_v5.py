@@ -1,6 +1,7 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Activation, Dropout, Flatten, Dense, Conv2D, MaxPool2D
+from keras.optimizers import SGD
 from keras.utils import np_utils, vis_utils
 from keras import backend as K
 import json
@@ -52,25 +53,26 @@ else:
 # model.add(Activation('softmax'))
 
 model = Sequential()
-model.add(Conv2D(32, (nb_conv, nb_conv), input_shape=input_shape, padding='valid'))
-model.add(Activation('relu'))
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
+model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPool2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
 
-model.add(Conv2D(64, (nb_conv, nb_conv)))
-model.add(Activation('relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPool2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(128))
-model.add(Activation('relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(nb_classes))
-model.add(Activation('softmax'))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(nb_classes, activation='softmax'))
 
-# build model
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy',
-              optimizer='adadelta',
+              optimizer=sgd,
               metrics=['accuracy'])
 
 # visualize model
