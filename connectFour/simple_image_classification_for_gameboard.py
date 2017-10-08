@@ -83,7 +83,8 @@ model.compile(loss='categorical_crossentropy',
 # save model to be reusable
 model_json = model.to_json()
 with open('simple_image_classification_fgb_architecture.json', 'w') as model_file:
-    json.dump(model_json, model_file)
+    model_file.write(model_json)
+    model_file.close()
 
 # input data generator for training (doing only rescaling of color-values)
 train_imagegen = ImageDataGenerator(rescale=1. / 255)

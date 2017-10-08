@@ -13,7 +13,7 @@ import json
 # model and data processing constants
 batch_size = 128
 nb_classes = 10
-nb_epoch = 12
+nb_epoch = 1  # 12 TODO: just for testing!
 
 # input image dimensions
 img_rows, img_cols = 28, 28
